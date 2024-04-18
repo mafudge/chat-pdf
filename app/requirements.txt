@@ -1,0 +1,11 @@
+streamlit
+langchain
+langchain-community
+chromadb
+pypdf
+tiktoken
+requests
+playwright
+streamlit-chat
+pysqlite3-binary
+ollama

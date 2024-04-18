@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - 11434:11434
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - default 
+
+  modelloader:
+    image: curlimages/curl:latest
+    command: "curl http://ollama:11434/api/pull -d '{ \"name\": \"tinyllama\" }'"
+    depends_on:
+      - ollama
+    networks:
+      - default
+
+  chatpdf:
+    build: ./app
+    environment:
+      FOO: "bar"
+    ports:
+      - 8501:8501
+    depends_on:
+      - modelloader
+    networks:
+      - default
+
+
+volumes:
+  ollama-data:
+
+networks:
+  default:
+    driver: bridge
